@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rstudioexo
+spec:
+  rules:
+  - host: rstudio-tp-carto.kub.sspcloud.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rstudio
+            port: 
+              number: 8800

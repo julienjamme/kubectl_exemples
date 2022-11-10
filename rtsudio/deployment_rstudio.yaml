@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rstudio
+  labels:
+    app: rstudio
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rstudio
+  template:
+    metadata:
+      labels:
+        app: rstudio
+    spec:
+      containers:
+      - name: rstudio
+        image: rocker/rstudio
+        ports:
+        - containerPort: 8787
