@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rstudio-734058
+    meta.helm.sh/release-namespace: user-julienjamme
+  creationTimestamp: "2022-11-11T22:35:49Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: rstudio-734058
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rstudio
+    helm.sh/chart: rstudio-1.5.0
+  name: rstudio-734058
+  namespace: user-julienjamme
+  resourceVersion: "615732850"
+  uid: 926090b2-8c22-41d4-853a-241e3332b005
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: rstudio-734058
+      app.kubernetes.io/name: rstudio
+  serviceName: rstudio-734058
+  template:
+    metadata:
+      annotations:
+        checksum/git: 5955d48130768cbf9b07241384ecb7b2827504e1a5b4259b46ca607e7fe66754
+        checksum/s3: 87a26ffad6b9769972d508ed7cd03c3cb3ab1c9b2ce67dbcad192f38ceec3d32
+        checksum/vault: 201a43811308dbc729b96c35a242f3c579b7b6ee726a3545344354fdd48f0b9a
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: rstudio-734058
+        app.kubernetes.io/name: rstudio
+    spec:
+      containers:
+      - args:
+        - /opt/onyxia-init.sh /init
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: KUBERNETES_POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: IMAGE_NAME
+          value: inseefrlab/onyxia-rstudio:ds-r4.2.3
+        - name: PASSWORD
+          value: 8ocic5bpwavmdf4ao2b5
+        envFrom:
+        - configMapRef:
+            name: rstudio-734058-configmaps3
+        - configMapRef:
+            name: rstudio-734058-configmapvault
+        - configMapRef:
+            name: rstudio-734058-configmapgit
+        image: inseefrlab/onyxia-rstudio:ds-r4.2.3
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: rstudio
+        ports:
+        - containerPort: 8787
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "30"
+            memory: 50Gi
+          requests:
+            cpu: 100m
+            memory: 2Gi
+        securityContext: {}
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /home/onyxia/work
+          name: home
+      dnsPolicy: ClusterFirst
+      hostname: rstudio
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1000
+      serviceAccount: rstudio-734058
+      serviceAccountName: rstudio-734058
+      subdomain: rstudio-734058
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: home
+        persistentVolumeClaim:
+          claimName: rstudio-734058
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+status:
+  availableReplicas: 1
+  collisionCount: 0
+  currentReplicas: 1
+  currentRevision: rstudio-734058-7d7dddcbcb
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updateRevision: rstudio-734058-7d7dddcbcb
+  updatedReplicas: 1

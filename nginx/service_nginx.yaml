@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: monnginx
+  name: monnginx
+  namespace: user-julienjamme
+  resourceVersion: "615728900"
+  uid: 51b101b1-4a97-470e-b9c7-9de0f195e686
+spec:
+  clusterIP: 10.233.8.78
+  clusterIPs:
+  - 10.233.8.78
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-80
+    nodePort: 31824
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: monnginx
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

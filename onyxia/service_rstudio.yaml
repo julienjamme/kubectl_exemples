@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rstudio-734058
+    meta.helm.sh/release-namespace: user-julienjamme
+  creationTimestamp: "2022-11-11T22:35:49Z"
+  labels:
+    app.kubernetes.io/instance: rstudio-734058
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rstudio
+    helm.sh/chart: rstudio-1.5.0
+  name: rstudio-734058
+  namespace: user-julienjamme
+  resourceVersion: "615732503"
+  uid: d061d645-90e1-4c44-b22f-c01c18b09c12
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/instance: rstudio-734058
+    app.kubernetes.io/name: rstudio
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
