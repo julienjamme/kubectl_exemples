@@ -1,0 +1,27 @@
+apiVersion: v1 # version api de k8s
+kind: Pod # type de ressource
+metadata: # info sur la ressource créée
+  name: monpod
+  labels:
+    env: prod
+spec: # caractéristiques de la ressource
+  containers:
+  # premier conteneur
+  - name: monnginx
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      # port exposant le pod à l'intérieur du cluster (pas à l'extérieur)
+      - containerPort: 80
+    # deuxieme conteneur
+  - name: mondebian
+    image: debian
+    command: ["sleep", "600"] #pour éviter le conteneur ne soit inactif
+    resources:
+      limits:
+        memory: "128Mi" 
+        cpu: "500m"
+  
